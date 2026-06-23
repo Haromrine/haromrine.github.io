@@ -4,290 +4,140 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Кодовый замок</title>
-    
-    <!-- ===== ПОДКЛЮЧЕНИЕ ШРИФТА ORBITRON ===== -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@200;300;400;600;700&display=swap" rel="stylesheet" />
-    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@200;300;400&display=swap" rel="stylesheet" />
     <style>
-        /* ===== БАЗОВЫЙ СБРОС ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            user-select: none;
         }
-
-        /* ===== ЖЁСТКОЕ ОТКЛЮЧЕНИЕ ВЫДЕЛЕНИЯ ===== */
-        *,
-        *::before,
-        *::after {
-            -webkit-tap-highlight-color: transparent !important;
-            -webkit-touch-callout: none !important;
-            -webkit-user-select: none !important;
-            -khtml-user-select: none !important;
-            -moz-user-select: none !important;
-            -ms-user-select: none !important;
-            user-select: none !important;
-            -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
-        }
-
-        /* ===== ОТКЛЮЧАЕМ ВСЁ ДЛЯ ПОЛЕЙ ВВОДА ===== */
-        input,
-        input::selection,
-        input::-moz-selection,
-        input::-webkit-selection {
-            -webkit-tap-highlight-color: transparent !important;
-            -webkit-touch-callout: none !important;
-            -webkit-user-select: none !important;
-            -khtml-user-select: none !important;
-            -moz-user-select: none !important;
-            -ms-user-select: none !important;
-            user-select: none !important;
-            background: transparent !important;
-            color: rgba(255, 255, 255, 0.35) !important;
-            text-shadow: none !important;
-        }
-
-        /* ===== УБИРАЕМ СИНЮЮ ОБВОДКУ ===== */
-        input:focus,
-        input:focus-visible,
-        input:active {
-            outline: none !important;
-            outline-offset: 0 !important;
-            box-shadow: none !important;
-            border-color: rgba(255, 255, 255, 0.08) !important;
-            -webkit-tap-highlight-color: transparent !important;
-            background: rgba(255, 255, 255, 0.025) !important;
-        }
-
-        /* ===== УБИРАЕМ СИНЕЕ ВЫДЕЛЕНИЕ ТЕКСТА В ПОЛЕ ===== */
-        input::selection {
-            background: transparent !important;
-            color: rgba(255, 255, 255, 0.35) !important;
-        }
-        input::-moz-selection {
-            background: transparent !important;
-            color: rgba(255, 255, 255, 0.35) !important;
-        }
-        input::-webkit-selection {
-            background: transparent !important;
-            color: rgba(255, 255, 255, 0.35) !important;
-        }
-
-        /* ===== УБИРАЕМ КУРСОР ВЫДЕЛЕНИЯ (текстовый курсор) ===== */
-        input {
-            caret-color: rgba(255, 255, 255, 0.02) !important;
-        }
-
-        /* ===== ПОЛНОСТЬЮ ЧЁРНЫЙ ФОН ===== */
         body {
-            font-family: 'Orbitron', 'Segoe UI', monospace;
-            background: #000000;
+            background: #000;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
+            font-family: 'Orbitron', monospace;
             padding: 20px;
-            overflow: hidden;
         }
-
-        /* ===== КОНТЕЙНЕР ===== */
         .container {
-            max-width: 720px;
-            width: 100%;
             text-align: center;
-            position: relative;
-            transform: scale(1.35);
-            transform-origin: center center;
+            transform: scale(1.4);
         }
-
-        /* ===== ЗАГОЛОВОК ===== */
         h1 {
-            color: rgba(255, 255, 255, 0.08);
-            font-size: 28px;
+            color: rgba(255,255,255,0.08);
+            font-size: 24px;
+            letter-spacing: 12px;
             font-weight: 200;
-            letter-spacing: 14px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
-
         .subtitle {
-            color: rgba(255, 255, 255, 0.04);
-            font-size: 13px;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            margin-bottom: 50px;
-            font-weight: 200;
-        }
-
-        /* ===== ЗАМКИ ===== */
-        .locks {
-            display: flex;
-            gap: 14px;
-            justify-content: center;
-            flex-wrap: wrap;
+            color: rgba(255,255,255,0.04);
+            font-size: 11px;
+            letter-spacing: 6px;
             margin-bottom: 40px;
         }
-
+        .locks {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
         .lock {
-            background: rgba(255, 255, 255, 0.015);
-            padding: 18px 12px 20px;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            min-width: 80px;
+            background: rgba(255,255,255,0.02);
+            padding: 14px 8px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.04);
+            min-width: 70px;
+            max-width: 85px;
             flex: 1;
-            max-width: 100px;
-            transition: 0.3s ease;
+            cursor: pointer;
         }
-
-        .lock:hover {
-            border-color: rgba(255, 255, 255, 0.05);
-            background: rgba(255, 255, 255, 0.02);
-        }
-
         .lock label {
-            color: rgba(255, 255, 255, 0.06);
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 4px;
+            color: rgba(255,255,255,0.06);
+            font-size: 10px;
+            letter-spacing: 3px;
             display: block;
-            margin-bottom: 10px;
-            font-weight: 200;
+            margin-bottom: 8px;
         }
-
-        /* ===== СТИЛЬ КРУТИЛКИ ===== */
         .lock input {
             width: 100%;
-            height: 68px;
-            font-size: 34px;
-            font-weight: 300;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.015);
-            color: rgba(255, 255, 255, 0.35);
-            outline: none !important;
-            transition: 0.4s ease;
-            -moz-appearance: textfield;
+            height: 60px;
+            font-size: 30px;
             font-family: 'Orbitron', monospace;
-            caret-color: rgba(255, 255, 255, 0.02) !important;
-            -webkit-tap-highlight-color: transparent !important;
-            -webkit-user-select: none !important;
-            user-select: none !important;
-            box-shadow: none !important;
+            text-align: center;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            color: rgba(255,255,255,0.4);
+            outline: none;
+            transition: 0.2s;
         }
-
-        .lock input::-webkit-outer-spin-button,
-        .lock input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
         .lock input:focus {
-            border-color: rgba(255, 255, 255, 0.08);
-            background: rgba(255, 255, 255, 0.025);
-            color: rgba(255, 255, 255, 0.5);
-            outline: none !important;
-            box-shadow: none !important;
-            -webkit-tap-highlight-color: transparent !important;
+            border-color: rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.04);
         }
-
-        /* ===== ПРАВИЛЬНО ===== */
         .lock input.correct {
-            border-color: rgba(255, 255, 255, 0.06);
-            color: rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.015);
+            border-color: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.2);
         }
-
-        /* ===== НЕПРАВИЛЬНО ===== */
         .lock input.wrong {
-            border-color: rgba(255, 50, 50, 0.06);
-            animation: gentleShake 0.3s ease;
+            border-color: rgba(255,50,50,0.1);
+            animation: shake 0.3s ease;
         }
-
-        @keyframes gentleShake {
+        @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-4px); }
             75% { transform: translateX(4px); }
         }
-
-        /* ===== КНОПКА ===== */
         .btn {
-            background: rgba(255, 255, 255, 0.015);
-            color: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            padding: 18px 50px;
-            font-size: 15px;
-            font-weight: 200;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: 0.5s ease;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            width: 100%;
-            max-width: 340px;
-            font-family: 'Orbitron', monospace;
-        }
-
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.025);
-            border-color: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.12);
-        }
-
-        /* ===== СООБЩЕНИЕ ===== */
-        .message {
-            margin-top: 25px;
-            color: rgba(255, 255, 255, 0.04);
-            font-size: 14px;
-            min-height: 26px;
-            font-weight: 200;
-            letter-spacing: 5px;
-            transition: 0.8s ease;
-            font-family: 'Orbitron', monospace;
-        }
-
-        .message.success {
-            color: rgba(255, 255, 255, 0.08);
-        }
-
-        .message.error {
-            color: rgba(255, 50, 50, 0.06);
-        }
-
-        .message.hint-show {
-            color: rgba(255, 255, 255, 0.05);
-        }
-
-        /* ===== ПОДСКАЗКА ===== */
-        .hint-bottom {
-            margin-top: 22px;
-            color: rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.02);
+            color: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.04);
+            padding: 14px 40px;
             font-size: 12px;
-            letter-spacing: 6px;
-            font-weight: 200;
-            transition: 0.4s ease;
             font-family: 'Orbitron', monospace;
+            letter-spacing: 5px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
             text-transform: uppercase;
-            cursor: default;
         }
-
-        .hint-bottom:hover {
-            color: rgba(255, 255, 255, 0.06);
+        .btn:hover {
+            background: rgba(255,255,255,0.04);
+            color: rgba(255,255,255,0.12);
         }
-
-        .hint-bottom strong {
+        .message {
+            color: rgba(255,255,255,0.04);
+            font-size: 12px;
+            letter-spacing: 4px;
+            margin-top: 20px;
+            min-height: 24px;
+            font-family: 'Orbitron', monospace;
+        }
+        .message.success {
+            color: rgba(255,255,255,0.1);
+        }
+        .message.error {
+            color: rgba(255,50,50,0.08);
+        }
+        .message.hint-show {
+            color: rgba(255,215,0,0.08);
+        }
+        .hint {
+            color: rgba(255,255,255,0.03);
+            font-size: 10px;
+            letter-spacing: 5px;
+            margin-top: 18px;
+            font-family: 'Orbitron', monospace;
+        }
+        .hint strong {
+            color: rgba(255,255,255,0.04);
             font-weight: 300;
-            color: rgba(255, 255, 255, 0.04);
-            letter-spacing: 8px;
+            letter-spacing: 6px;
         }
-
-        .hint-bottom:hover strong {
-            color: rgba(255, 255, 255, 0.08);
-        }
-
-        /* ===== ЭФФЕКТ ШЁЛКА ===== */
-        .silk-overlay {
+        .silk {
             position: fixed;
             top: 0;
             left: 0;
@@ -297,286 +147,190 @@
             z-index: 9999;
             opacity: 0;
             transition: opacity 2s ease;
-            background: 
-                radial-gradient(ellipse at center, rgba(255, 255, 255, 0.008) 0%, transparent 70%);
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.01) 0%, transparent 70%);
         }
-
-        .silk-overlay.active {
+        .silk.active {
             opacity: 1;
-            animation: silkRipple 3s ease-out forwards;
+            animation: silkAnim 3s ease-out forwards;
         }
-
-        @keyframes silkRipple {
-            0% {
-                background: 
-                    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.015) 0%, transparent 40%);
-            }
-            30% {
-                background: 
-                    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.01) 20%, transparent 60%);
-            }
-            70% {
-                background: 
-                    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.006) 40%, transparent 80%);
-            }
-            100% {
-                background: 
-                    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.002) 60%, transparent 100%);
-            }
+        @keyframes silkAnim {
+            0% { background: radial-gradient(ellipse at center, rgba(255,255,255,0.02) 0%, transparent 40%); }
+            100% { background: radial-gradient(ellipse at center, rgba(255,255,255,0.002) 60%, transparent 100%); }
         }
-
-        /* ===== ДЕКОР ===== */
-        .footer {
-            margin-top: 35px;
-            color: rgba(255, 255, 255, 0.015);
-            font-size: 11px;
-            letter-spacing: 14px;
-        }
-
-        /* ===== АДАПТИВ ===== */
-        @media (max-width: 600px) {
-            .container {
-                transform: scale(1.0);
-            }
-            .lock {
-                min-width: 60px;
-                max-width: 72px;
-                padding: 14px 8px 16px;
-            }
-            .lock input {
-                height: 52px;
-                font-size: 26px;
-            }
-            h1 {
-                font-size: 20px;
-                letter-spacing: 8px;
-            }
-            .btn {
-                font-size: 12px;
-                padding: 14px 30px;
-                max-width: 280px;
-            }
-            .subtitle {
-                font-size: 10px;
-                letter-spacing: 5px;
-                margin-bottom: 35px;
-            }
-            .hint-bottom {
-                font-size: 10px;
-                letter-spacing: 4px;
-            }
-            .message {
-                font-size: 11px;
-            }
-        }
-
-        @media (max-width: 420px) {
-            .container {
-                transform: scale(0.9);
-            }
-            .lock {
-                min-width: 48px;
-                max-width: 56px;
-                padding: 10px 5px 12px;
-            }
-            .lock input {
-                height: 42px;
-                font-size: 20px;
-            }
-            h1 {
-                font-size: 16px;
-                letter-spacing: 5px;
-            }
-            .btn {
-                font-size: 10px;
-                padding: 12px 20px;
-                max-width: 100%;
-                letter-spacing: 4px;
-            }
+        @media (max-width: 500px) {
+            .container { transform: scale(1); }
+            .lock { min-width: 55px; max-width: 65px; }
+            .lock input { height: 48px; font-size: 24px; }
         }
     </style>
 </head>
 <body>
 
-<!-- ===== ЭФФЕКТ ШЁЛКА ===== -->
-<div class="silk-overlay" id="silkOverlay"></div>
+<div class="silk" id="silk"></div>
 
 <div class="container">
-
-    <!-- ===== ЗАГОЛОВОК ===== -->
     <h1>Кодовый замок</h1>
     <p class="subtitle">поверните колёса</p>
 
-    <!-- ===== 5 ЗАМКОВ ===== -->
     <div class="locks">
-        <div class="lock">
-            <label>#1</label>
-            <input type="number" min="0" max="9" value="0" id="d1" />
-        </div>
-        <div class="lock">
-            <label>#2</label>
-            <input type="number" min="0" max="9" value="0" id="d2" />
-        </div>
-        <div class="lock">
-            <label>#3</label>
-            <input type="number" min="0" max="9" value="0" id="d3" />
-        </div>
-        <div class="lock">
-            <label>#4</label>
-            <input type="number" min="0" max="9" value="0" id="d4" />
-        </div>
-        <div class="lock">
-            <label>#5</label>
-            <input type="number" min="0" max="9" value="0" id="d5" />
-        </div>
+        <div class="lock"><label>#1</label><input type="text" maxlength="1" id="d1" /></div>
+        <div class="lock"><label>#2</label><input type="text" maxlength="1" id="d2" /></div>
+        <div class="lock"><label>#3</label><input type="text" maxlength="1" id="d3" /></div>
+        <div class="lock"><label>#4</label><input type="text" maxlength="1" id="d4" /></div>
+        <div class="lock"><label>#5</label><input type="text" maxlength="1" id="d5" /></div>
     </div>
 
-    <!-- ===== КНОПКА ===== -->
     <button class="btn" id="checkBtn">проверить</button>
-
-    <!-- ===== СООБЩЕНИЕ ===== -->
     <div class="message" id="message">введите код</div>
-
-    <!-- ===== ПОДСКАЗКА ===== -->
-    <div class="hint-bottom" id="hintBottom">
-        подсказка: <strong>leon</strong>
-    </div>
-
-    <!-- ===== ДЕКОР ===== -->
-    <div class="footer">✦ ✦ ✦</div>
-
+    <div class="hint">подсказка: <strong>leon</strong></div>
 </div>
 
 <script>
-    // ===============================
-    //  НАСТРОЙКИ
-    // ===============================
-    const CORRECT_CODE = "11037";
+// ============================================================
+//  НОВАЯ ВЕРСИЯ — БЕЗ ОШИБОК
+// ============================================================
 
-    // ===============================
-    //  ЭЛЕМЕНТЫ
-    // ===============================
-    const inputs = [
-        document.getElementById("d1"),
-        document.getElementById("d2"),
-        document.getElementById("d3"),
-        document.getElementById("d4"),
-        document.getElementById("d5")
-    ];
-    const message = document.getElementById("message");
-    const checkBtn = document.getElementById("checkBtn");
-    const hintBottom = document.getElementById("hintBottom");
-    const silkOverlay = document.getElementById("silkOverlay");
+// Получаем элементы
+const d1 = document.getElementById('d1');
+const d2 = document.getElementById('d2');
+const d3 = document.getElementById('d3');
+const d4 = document.getElementById('d4');
+const d5 = document.getElementById('d5');
+const allInputs = [d1, d2, d3, d4, d5];
 
-    // ===============================
-    //  ОТКЛЮЧАЕМ ВЫДЕЛЕНИЕ ЧЕРЕЗ JS
-    // ===============================
-    function disableSelection(event) {
-        event.preventDefault();
-        return false;
-    }
+const message = document.getElementById('message');
+const checkBtn = document.getElementById('checkBtn');
+const silk = document.getElementById('silk');
 
-    // Запрещаем выделение на всех полях
-    inputs.forEach(inp => {
-        inp.addEventListener('select', disableSelection);
-        inp.addEventListener('selectstart', disableSelection);
-        inp.addEventListener('mousedown', function(e) {
-            // Если клик был внутри поля — отменяем выделение
-            this.style.userSelect = 'none';
-            this.style.webkitUserSelect = 'none';
-        });
-        inp.addEventListener('mouseup', function(e) {
-            // Сразу после клика убираем любое выделение
-            this.setSelectionRange(0, 0);
-        });
-        inp.addEventListener('focus', function() {
-            // При фокусе снимаем выделение
-            this.setSelectionRange(0, 0);
-        });
-        inp.addEventListener('blur', function() {
-            this.setSelectionRange(0, 0);
-        });
-    });
-
-    // ===============================
-    //  ФУНКЦИЯ ПРОВЕРКИ
-    // ===============================
-    function checkCode() {
-        const entered = inputs.map(inp => inp.value).join("");
-
-        inputs.forEach(inp => {
-            inp.classList.remove("correct", "wrong");
-            // Снимаем выделение
-            inp.setSelectionRange(0, 0);
-        });
-
-        if (entered === CORRECT_CODE) {
-            message.textContent = "ящик открыт";
-            message.className = "message success";
-            inputs.forEach(inp => inp.classList.add("correct"));
-
-            silkOverlay.classList.add("active");
-            setTimeout(() => {
-                silkOverlay.classList.remove("active");
-            }, 3000);
-
-        } else {
-            message.textContent = "неверный код";
-            message.className = "message error";
-            inputs.forEach(inp => inp.classList.add("wrong"));
-
-            setTimeout(() => {
-                message.textContent = 'вспомните "leon"';
-                message.className = "message hint-show";
-            }, 700);
-
-            setTimeout(() => {
-                inputs.forEach(inp => inp.classList.remove("wrong"));
-            }, 400);
+// ===== АВТОПЕРЕКЛЮЧЕНИЕ =====
+allInputs.forEach(function(input, index) {
+    // При вводе
+    input.addEventListener('input', function() {
+        // Оставляем только цифры
+        this.value = this.value.replace(/\D/g, '');
+        if (this.value === '') this.value = '0';
+        if (parseInt(this.value) > 9) this.value = '9';
+        if (parseInt(this.value) < 0) this.value = '0';
+        
+        // Переключаем на следующее
+        if (this.value.length === 1 && index < allInputs.length - 1) {
+            allInputs[index + 1].focus();
+            allInputs[index + 1].select();
         }
+    });
+
+    // При нажатии клавиш
+    input.addEventListener('keydown', function(e) {
+        // Цифры
+        if (e.key >= '0' && e.key <= '9') {
+            this.value = e.key;
+            if (index < allInputs.length - 1) {
+                setTimeout(function() {
+                    allInputs[index + 1].focus();
+                    allInputs[index + 1].select();
+                }, 5);
+            }
+            e.preventDefault();
+        }
+        
+        // Backspace
+        if (e.key === 'Backspace' && this.value === '0' && index > 0) {
+            allInputs[index - 1].focus();
+            allInputs[index - 1].select();
+            e.preventDefault();
+        }
+        
+        // Enter
+        if (e.key === 'Enter') {
+            checkCode();
+            e.preventDefault();
+        }
+        
+        // Стрелки
+        if (e.key === 'ArrowLeft' && index > 0) {
+            allInputs[index - 1].focus();
+            allInputs[index - 1].select();
+            e.preventDefault();
+        }
+        if (e.key === 'ArrowRight' && index < allInputs.length - 1) {
+            allInputs[index + 1].focus();
+            allInputs[index + 1].select();
+            e.preventDefault();
+        }
+    });
+
+    // При фокусе — выделяем
+    input.addEventListener('focus', function() {
+        this.select();
+    });
+});
+
+// ===== ФУНКЦИЯ ПРОВЕРКИ =====
+function checkCode() {
+    // Собираем код
+    var code = '';
+    for (var i = 0; i < allInputs.length; i++) {
+        code = code + allInputs[i].value;
     }
-
-    // ===============================
-    //  СОБЫТИЯ
-    // ===============================
-
-    checkBtn.addEventListener("click", checkCode);
-
-    inputs.forEach((inp, index) => {
-        inp.addEventListener("keypress", function(e) {
-            if (e.key === "Enter") checkCode();
-        });
-
-        inp.addEventListener("input", function() {
-            if (this.value.length > 1) this.value = this.value.slice(-1);
-            if (this.value < 0) this.value = 0;
-            if (this.value > 9) this.value = 9;
-            if (this.value === "") this.value = 0;
-
-            // Снимаем выделение после ввода
-            this.setSelectionRange(0, 0);
-
-            if (this.value.length === 1 && index < inputs.length - 1) {
-                inputs[index + 1].focus();
+    
+    // Убираем старые классы
+    for (var i = 0; i < allInputs.length; i++) {
+        allInputs[i].classList.remove('correct', 'wrong');
+    }
+    
+    // Проверяем
+    if (code === '11037') {
+        // ✅ ПРАВИЛЬНО
+        message.textContent = 'ящик открыт';
+        message.className = 'message success';
+        for (var i = 0; i < allInputs.length; i++) {
+            allInputs[i].classList.add('correct');
+        }
+        
+        // Эффект шёлка
+        silk.classList.add('active');
+        setTimeout(function() {
+            silk.classList.remove('active');
+        }, 3000);
+        
+        // Переход на secret.html
+        setTimeout(function() {
+            window.location.href = 'secret.html';
+        }, 1500);
+        
+    } else {
+        // ❌ НЕПРАВИЛЬНО
+        message.textContent = 'неверный код';
+        message.className = 'message error';
+        for (var i = 0; i < allInputs.length; i++) {
+            allInputs[i].classList.add('wrong');
+        }
+        
+        setTimeout(function() {
+            message.textContent = 'вспомните "leon"';
+            message.className = 'message hint-show';
+        }, 700);
+        
+        setTimeout(function() {
+            for (var i = 0; i < allInputs.length; i++) {
+                allInputs[i].classList.remove('wrong');
             }
-        });
-    });
+        }, 400);
+    }
+}
 
-    // Клик по подсказке
-    hintBottom.addEventListener("click", function() {
-        message.textContent = 'код связан с "leon"';
-        message.className = "message hint-show";
-        setTimeout(() => {
-            if (message.className !== "message success" && message.className !== "message error") {
-                message.textContent = 'введите код';
-                message.className = "message";
-            }
-        }, 3500);
-    });
+// ===== КНОПКА =====
+checkBtn.addEventListener('click', function() {
+    checkCode();
+});
 
-    window.addEventListener("load", () => {
-        inputs[0].focus();
-    });
+// ===== СТАРТ =====
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        d1.focus();
+        d1.select();
+    }, 100);
+});
 </script>
 
 </body>
