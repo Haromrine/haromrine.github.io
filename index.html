@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Кодовый замок</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@200;300;400&display=swap" rel="stylesheet" />
+    <title>Сейф</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@200;300;400;600;700&display=swap" rel="stylesheet" />
     <style>
         * {
             margin: 0;
@@ -12,131 +12,239 @@
             box-sizing: border-box;
             user-select: none;
         }
+
         body {
-            background: #000;
+            background: #0a0a0a;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             font-family: 'Orbitron', monospace;
             padding: 20px;
+            flex-direction: column;
         }
+
         .container {
+            max-width: 500px;
+            width: 100%;
             text-align: center;
-            transform: scale(1.4);
         }
-        h1 {
-            color: rgba(255,255,255,0.08);
-            font-size: 24px;
-            letter-spacing: 12px;
-            font-weight: 200;
-            margin-bottom: 5px;
+
+        /* ===== СЕЙФ ===== */
+        .safe {
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto 30px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 30px 20px 25px;
+            position: relative;
+            transition: 0.4s;
         }
-        .subtitle {
-            color: rgba(255,255,255,0.04);
-            font-size: 11px;
+
+        .safe.locked {
+            border-color: rgba(255,50,50,0.1);
+        }
+
+        .safe.unlocked {
+            border-color: rgba(50,255,50,0.1);
+            box-shadow: 0 0 40px rgba(50,255,50,0.03);
+        }
+
+        /* ===== РУЧКА СЕЙФА ===== */
+        .handle {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 20px;
+            border: 2px solid rgba(255,255,255,0.06);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.4s;
+            font-size: 20px;
+            color: rgba(255,255,255,0.03);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .safe.unlocked .handle {
+            border-color: rgba(50,255,50,0.1);
+            color: rgba(50,255,50,0.1);
+        }
+
+        /* ===== ДИСПЛЕЙ КОДА ===== */
+        .code-display {
+            font-size: 20px;
             letter-spacing: 6px;
-            margin-bottom: 40px;
+            color: rgba(255,255,255,0.08);
+            min-height: 36px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.03);
+            word-break: break-all;
+            transition: 0.3s;
+            font-family: 'Orbitron', monospace;
         }
-        .locks {
+
+        .code-display .dot-symbol {
+            color: rgba(255,255,255,0.12);
+        }
+        .code-display .dash-symbol {
+            color: rgba(255,255,255,0.18);
+            letter-spacing: 8px;
+        }
+
+        /* ===== КНОПКИ СЕЙФА ===== */
+        .safe-buttons {
             display: flex;
             gap: 12px;
             justify-content: center;
-            margin-bottom: 30px;
+            flex-wrap: wrap;
         }
-        .lock {
-            background: rgba(255,255,255,0.02);
-            padding: 14px 8px 16px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.04);
-            min-width: 70px;
-            max-width: 85px;
-            flex: 1;
-            cursor: pointer;
-        }
-        .lock label {
-            color: rgba(255,255,255,0.06);
-            font-size: 10px;
-            letter-spacing: 3px;
-            display: block;
-            margin-bottom: 8px;
-        }
-        .lock input {
-            width: 100%;
-            height: 60px;
-            font-size: 30px;
-            font-family: 'Orbitron', monospace;
-            text-align: center;
+
+        .safe-btn {
             background: rgba(255,255,255,0.02);
             border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 10px;
-            color: rgba(255,255,255,0.4);
-            outline: none;
-            transition: 0.2s;
-        }
-        .lock input:focus {
-            border-color: rgba(255,255,255,0.12);
-            background: rgba(255,255,255,0.04);
-        }
-        .lock input.correct {
-            border-color: rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.2);
-        }
-        .lock input.wrong {
-            border-color: rgba(255,50,50,0.1);
-            animation: shake 0.3s ease;
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-4px); }
-            75% { transform: translateX(4px); }
-        }
-        .btn {
-            background: rgba(255,255,255,0.02);
-            color: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.04);
-            padding: 14px 40px;
-            font-size: 12px;
+            border-radius: 12px;
+            padding: 14px 28px;
             font-family: 'Orbitron', monospace;
-            letter-spacing: 5px;
-            border-radius: 30px;
+            font-size: 20px;
+            color: rgba(255,255,255,0.15);
             cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
+            transition: 0.25s;
+            min-width: 70px;
+            letter-spacing: 2px;
         }
-        .btn:hover {
-            background: rgba(255,255,255,0.04);
-            color: rgba(255,255,255,0.12);
+
+        .safe-btn:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.25);
         }
-        .message {
-            color: rgba(255,255,255,0.04);
-            font-size: 12px;
-            letter-spacing: 4px;
-            margin-top: 20px;
-            min-height: 24px;
+
+        .safe-btn:active {
+            transform: scale(0.95);
+        }
+
+        .safe-btn.dot-btn {
+            border-color: rgba(255,255,255,0.04);
+        }
+        .safe-btn.dot-btn:hover {
+            border-color: rgba(255,215,0,0.15);
+            color: rgba(255,215,0,0.2);
+        }
+
+        .safe-btn.dash-btn {
+            border-color: rgba(255,255,255,0.06);
+        }
+        .safe-btn.dash-btn:hover {
+            border-color: rgba(255,215,0,0.2);
+            color: rgba(255,215,0,0.25);
+        }
+
+        .safe-btn.clear-btn {
+            border-color: rgba(255,50,50,0.04);
+            color: rgba(255,50,50,0.06);
+            font-size: 16px;
+        }
+        .safe-btn.clear-btn:hover {
+            border-color: rgba(255,50,50,0.08);
+            color: rgba(255,50,50,0.1);
+        }
+
+        .safe-btn.submit-btn {
+            border-color: rgba(50,255,50,0.04);
+            color: rgba(50,255,50,0.06);
+            font-size: 16px;
+        }
+        .safe-btn.submit-btn:hover {
+            border-color: rgba(50,255,50,0.08);
+            color: rgba(50,255,50,0.1);
+        }
+
+        .safe-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ===== МОРЗЯНКА ВНИЗУ ===== */
+        .morse-hint {
+            margin-top: 25px;
+            color: rgba(255,255,255,0.03);
+            font-size: 14px;
+            letter-spacing: 2px;
+            font-weight: 200;
             font-family: 'Orbitron', monospace;
+            transition: 0.4s;
+            padding: 12px;
+            border-top: 1px solid rgba(255,255,255,0.02);
+            padding-top: 20px;
         }
-        .message.success {
-            color: rgba(255,255,255,0.1);
+
+        .morse-hint .hint-dot {
+            color: rgba(255,255,255,0.04);
         }
-        .message.error {
+        .morse-hint .hint-dash {
+            color: rgba(255,255,255,0.06);
+            letter-spacing: 4px;
+        }
+
+        .morse-hint.active {
+            color: rgba(255,255,255,0.06);
+        }
+
+        /* ===== СТАТУС ===== */
+        .status {
+            margin-top: 15px;
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.03);
+            min-height: 22px;
+            transition: 0.4s;
+        }
+        .status.error {
             color: rgba(255,50,50,0.08);
         }
-        .message.hint-show {
-            color: rgba(255,215,0,0.08);
+        .status.success {
+            color: rgba(50,255,50,0.08);
         }
-        .hint {
-            color: rgba(255,255,255,0.03);
-            font-size: 10px;
-            letter-spacing: 5px;
-            margin-top: 18px;
-            font-family: 'Orbitron', monospace;
+
+        /* ============================================================
+           КОНТЕНТ (ФОТО) — БЕЗ НАДПИСИ
+           ============================================================ */
+        .hidden-content {
+            margin-top: 30px;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 1.5s ease, max-height 1.5s ease;
         }
-        .hint strong {
-            color: rgba(255,255,255,0.04);
-            font-weight: 300;
-            letter-spacing: 6px;
+
+        .hidden-content.visible {
+            opacity: 1;
+            max-height: 800px;
         }
+
+        .hidden-content .image-wrapper {
+            width: 100%;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .hidden-content .image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ===== ЭФФЕКТ ШЁЛКА ===== */
         .silk {
             position: fixed;
             top: 0;
@@ -157,180 +265,336 @@
             0% { background: radial-gradient(ellipse at center, rgba(255,255,255,0.02) 0%, transparent 40%); }
             100% { background: radial-gradient(ellipse at center, rgba(255,255,255,0.002) 60%, transparent 100%); }
         }
-        @media (max-width: 500px) {
-            .container { transform: scale(1); }
-            .lock { min-width: 55px; max-width: 65px; }
-            .lock input { height: 48px; font-size: 24px; }
+
+        .footer {
+            margin-top: 15px;
+            color: rgba(255,255,255,0.01);
+            font-size: 8px;
+            letter-spacing: 10px;
+        }
+
+        @media (max-width: 450px) {
+            .safe-btn {
+                padding: 12px 18px;
+                font-size: 17px;
+                min-width: 60px;
+            }
+            .safe {
+                padding: 20px 15px 20px;
+            }
+            .code-display {
+                font-size: 17px;
+                letter-spacing: 4px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="silk" id="silk"></div>
+<div class="silk active" id="silk"></div>
 
 <div class="container">
-    <h1>Кодовый замок</h1>
-    <p class="subtitle">поверните колёса</p>
 
-    <div class="locks">
-        <div class="lock"><label>#1</label><input type="text" maxlength="1" id="d1" /></div>
-        <div class="lock"><label>#2</label><input type="text" maxlength="1" id="d2" /></div>
-        <div class="lock"><label>#3</label><input type="text" maxlength="1" id="d3" /></div>
-        <div class="lock"><label>#4</label><input type="text" maxlength="1" id="d4" /></div>
-        <div class="lock"><label>#5</label><input type="text" maxlength="1" id="d5" /></div>
+    <!-- ===== СЕЙФ ===== -->
+    <div class="safe locked" id="safe">
+        <div class="handle" id="handle">✦</div>
+
+        <div class="code-display" id="codeDisplay">
+            <span style="color:rgba(255,255,255,0.02);">_ _ _ _ _ _ _ _ _ _</span>
+        </div>
+
+        <div class="safe-buttons">
+            <button class="safe-btn dot-btn" id="dotBtn">·</button>
+            <button class="safe-btn dash-btn" id="dashBtn">—</button>
+            <button class="safe-btn clear-btn" id="clearBtn">✕</button>
+            <button class="safe-btn submit-btn" id="submitBtn">↵</button>
+        </div>
+
+        <div class="status" id="status"></div>
     </div>
 
-    <button class="btn" id="checkBtn">проверить</button>
-    <div class="message" id="message">введите код</div>
-    <div class="hint">подсказка: <strong>leon</strong></div>
+    <!-- ===== МОРЗЯНКА ВНИЗУ (ПОДСКАЗКА) ===== -->
+    <div class="morse-hint" id="morseHint">
+        <span class="hint-dot">·</span>
+        <span class="hint-dash">—</span>
+        <span class="hint-dot">·</span>
+        <span class="hint-dash">—</span>
+        <span class="hint-dot">·</span>
+        <span class="hint-dash">—</span>
+        <span class="hint-dot">·</span>
+        <span class="hint-dash">—</span>
+        <span class="hint-dot">·</span>
+        <span class="hint-dash">—</span>
+    </div>
+
+    <!-- ===== СКРЫТЫЙ КОНТЕНТ (ТОЛЬКО ФОТО) ===== -->
+    <div class="hidden-content" id="hiddenContent">
+        <div class="image-wrapper">
+            <img src="photo.jpg" alt="Секретное фото" id="secretImage" />
+        </div>
+    </div>
+
+    <div class="footer">✦ ✦ ✦</div>
 </div>
 
 <script>
-// ============================================================
-//  НОВАЯ ВЕРСИЯ — БЕЗ ОШИБОК
-// ============================================================
+    // ============================================================
+    //  ПРАВИЛЬНЫЙ КОД В МОРЗЕ (БЕЗ ПРОБЕЛОВ):
+    //  -.-.---..-.  (C O D E)
+    // ============================================================
 
-// Получаем элементы
-const d1 = document.getElementById('d1');
-const d2 = document.getElementById('d2');
-const d3 = document.getElementById('d3');
-const d4 = document.getElementById('d4');
-const d5 = document.getElementById('d5');
-const allInputs = [d1, d2, d3, d4, d5];
+    const CORRECT_MORSE = "-.-.---..-.";
 
-const message = document.getElementById('message');
-const checkBtn = document.getElementById('checkBtn');
-const silk = document.getElementById('silk');
+    // ============================================================
+    //  СОСТОЯНИЯ
+    // ============================================================
 
-// ===== АВТОПЕРЕКЛЮЧЕНИЕ =====
-allInputs.forEach(function(input, index) {
-    // При вводе
-    input.addEventListener('input', function() {
-        // Оставляем только цифры
-        this.value = this.value.replace(/\D/g, '');
-        if (this.value === '') this.value = '0';
-        if (parseInt(this.value) > 9) this.value = '9';
-        if (parseInt(this.value) < 0) this.value = '0';
-        
-        // Переключаем на следующее
-        if (this.value.length === 1 && index < allInputs.length - 1) {
-            allInputs[index + 1].focus();
-            allInputs[index + 1].select();
-        }
-    });
+    let currentCode = "";
+    let isUnlocked = false;
+    const safe = document.getElementById('safe');
+    const handle = document.getElementById('handle');
+    const codeDisplay = document.getElementById('codeDisplay');
+    const statusEl = document.getElementById('status');
+    const morseHint = document.getElementById('morseHint');
+    const hiddenContent = document.getElementById('hiddenContent');
 
-    // При нажатии клавиш
-    input.addEventListener('keydown', function(e) {
-        // Цифры
-        if (e.key >= '0' && e.key <= '9') {
-            this.value = e.key;
-            if (index < allInputs.length - 1) {
-                setTimeout(function() {
-                    allInputs[index + 1].focus();
-                    allInputs[index + 1].select();
-                }, 5);
+    const dotBtn = document.getElementById('dotBtn');
+    const dashBtn = document.getElementById('dashBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const submitBtn = document.getElementById('submitBtn');
+
+    const allButtons = [dotBtn, dashBtn, clearBtn, submitBtn];
+
+    // ============================================================
+    //  ЗВУК (при нажатии кнопок)
+    // ============================================================
+
+    let audioCtx = null;
+
+    function playBeep(frequency = 600, duration = 100) {
+        try {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
-            e.preventDefault();
-        }
-        
-        // Backspace
-        if (e.key === 'Backspace' && this.value === '0' && index > 0) {
-            allInputs[index - 1].focus();
-            allInputs[index - 1].select();
-            e.preventDefault();
-        }
-        
-        // Enter
-        if (e.key === 'Enter') {
-            checkCode();
-            e.preventDefault();
-        }
-        
-        // Стрелки
-        if (e.key === 'ArrowLeft' && index > 0) {
-            allInputs[index - 1].focus();
-            allInputs[index - 1].select();
-            e.preventDefault();
-        }
-        if (e.key === 'ArrowRight' && index < allInputs.length - 1) {
-            allInputs[index + 1].focus();
-            allInputs[index + 1].select();
-            e.preventDefault();
-        }
-    });
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
 
-    // При фокусе — выделяем
-    input.addEventListener('focus', function() {
-        this.select();
-    });
-});
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
 
-// ===== ФУНКЦИЯ ПРОВЕРКИ =====
-function checkCode() {
-    // Собираем код
-    var code = '';
-    for (var i = 0; i < allInputs.length; i++) {
-        code = code + allInputs[i].value;
+            oscillator.frequency.value = frequency;
+            gainNode.gain.value = 0.15;
+
+            oscillator.start();
+            setTimeout(() => {
+                oscillator.stop();
+            }, duration);
+        } catch (e) {}
     }
-    
-    // Убираем старые классы
-    for (var i = 0; i < allInputs.length; i++) {
-        allInputs[i].classList.remove('correct', 'wrong');
+
+    // ============================================================
+    //  ВОСПРОИЗВЕДЕНИЕ ЗВУКА ПОСЛЕ ОТКРЫТИЯ
+    // ============================================================
+
+    function playSoundAfterOpen() {
+        try {
+            const audio = new Audio();
+            audio.src = 'sound.mp3';
+            audio.volume = 0.5;
+
+            const playAttempt = () => {
+                audio.play().catch(() => {
+                    document.addEventListener('click', function playOnce() {
+                        audio.play();
+                        document.removeEventListener('click', playOnce);
+                    }, { once: true });
+                });
+            };
+
+            setTimeout(playAttempt, 500);
+        } catch (e) {
+            console.log('Звук не загружен');
+        }
     }
-    
-    // Проверяем
-    if (code === '11037') {
-        // ✅ ПРАВИЛЬНО
-        message.textContent = 'ящик открыт';
-        message.className = 'message success';
-        for (var i = 0; i < allInputs.length; i++) {
-            allInputs[i].classList.add('correct');
+
+    // ============================================================
+    //  ОБНОВЛЕНИЕ ДИСПЛЕЯ
+    // ============================================================
+
+    function updateDisplay() {
+        if (currentCode.length === 0) {
+            codeDisplay.innerHTML = `<span style="color:rgba(255,255,255,0.02);">_ _ _ _ _ _ _ _ _ _</span>`;
+            return;
         }
-        
-        // Эффект шёлка
-        silk.classList.add('active');
-        setTimeout(function() {
-            silk.classList.remove('active');
-        }, 3000);
-        
-        // Переход на secret.html
-        setTimeout(function() {
-            window.location.href = 'secret.html';
-        }, 1500);
-        
-    } else {
-        // ❌ НЕПРАВИЛЬНО
-        message.textContent = 'неверный код';
-        message.className = 'message error';
-        for (var i = 0; i < allInputs.length; i++) {
-            allInputs[i].classList.add('wrong');
-        }
-        
-        setTimeout(function() {
-            message.textContent = 'вспомните "leon"';
-            message.className = 'message hint-show';
-        }, 700);
-        
-        setTimeout(function() {
-            for (var i = 0; i < allInputs.length; i++) {
-                allInputs[i].classList.remove('wrong');
+
+        let html = '';
+        for (let i = 0; i < currentCode.length; i++) {
+            const char = currentCode[i];
+            if (char === '.') {
+                html += `<span class="dot-symbol">·</span>`;
+            } else if (char === '-') {
+                html += `<span class="dash-symbol">—</span>`;
             }
-        }, 400);
+        }
+        codeDisplay.innerHTML = html;
     }
-}
 
-// ===== КНОПКА =====
-checkBtn.addEventListener('click', function() {
-    checkCode();
-});
+    // ============================================================
+    //  ФУНКЦИИ КНОПОК
+    // ============================================================
 
-// ===== СТАРТ =====
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        d1.focus();
-        d1.select();
-    }, 100);
-});
+    function addSymbol(symbol) {
+        if (isUnlocked) return;
+        if (currentCode.length >= 15) return;
+
+        currentCode += symbol;
+        updateDisplay();
+        playBeep(symbol === '.' ? 600 : 400, symbol === '.' ? 80 : 160);
+        statusEl.textContent = '';
+        statusEl.className = 'status';
+    }
+
+    function clearCode() {
+        if (isUnlocked) return;
+        currentCode = '';
+        updateDisplay();
+        playBeep(300, 60);
+        statusEl.textContent = '';
+        statusEl.className = 'status';
+    }
+
+    function submitCode() {
+        if (isUnlocked) return;
+
+        if (currentCode.length === 0) {
+            statusEl.textContent = 'введите код';
+            statusEl.className = 'status error';
+            playBeep(200, 150);
+            return;
+        }
+
+        // Проверяем код
+        if (currentCode === CORRECT_MORSE) {
+            // ✅ ПРАВИЛЬНО
+            isUnlocked = true;
+            safe.classList.remove('locked');
+            safe.classList.add('unlocked');
+            handle.textContent = '✓';
+            statusEl.textContent = 'ОТКРЫТО';
+            statusEl.className = 'status success';
+
+            allButtons.forEach(btn => btn.disabled = true);
+
+            // ===== ПОКАЗЫВАЕМ ФОТО =====
+            hiddenContent.classList.add('visible');
+
+            // ===== ВОСПРОИЗВЕДЕНИЕ ЗВУКА =====
+            playSoundAfterOpen();
+
+            // Эффект шёлка
+            document.getElementById('silk').classList.add('active');
+            setTimeout(() => {
+                document.getElementById('silk').classList.remove('active');
+            }, 3000);
+
+            morseHint.innerHTML = '🔓 ОТКРЫТО';
+            morseHint.style.color = 'rgba(255,255,255,0.06)';
+            morseHint.style.letterSpacing = '6px';
+
+            playBeep(800, 200);
+            setTimeout(() => playBeep(1000, 200), 250);
+
+        } else {
+            // ❌ НЕПРАВИЛЬНО
+            statusEl.textContent = 'неверный код';
+            statusEl.className = 'status error';
+            playBeep(200, 300);
+
+            safe.style.animation = 'shake 0.3s ease';
+            setTimeout(() => {
+                safe.style.animation = '';
+            }, 400);
+
+            setTimeout(() => {
+                currentCode = '';
+                updateDisplay();
+                statusEl.textContent = '';
+                statusEl.className = 'status';
+            }, 1200);
+        }
+    }
+
+    // ============================================================
+    //  НАВЕШИВАЕМ СОБЫТИЯ
+    // ============================================================
+
+    dotBtn.addEventListener('click', () => addSymbol('.'));
+    dashBtn.addEventListener('click', () => addSymbol('-'));
+    clearBtn.addEventListener('click', clearCode);
+    submitBtn.addEventListener('click', submitCode);
+
+    // ===== КЛАВИАТУРА =====
+    document.addEventListener('keydown', function(e) {
+        if (isUnlocked) return;
+
+        switch (e.key) {
+            case '.':
+            case '1':
+                addSymbol('.');
+                e.preventDefault();
+                break;
+            case '-':
+            case '2':
+                addSymbol('-');
+                e.preventDefault();
+                break;
+            case 'Backspace':
+                clearCode();
+                e.preventDefault();
+                break;
+            case 'Enter':
+                submitCode();
+                e.preventDefault();
+                break;
+        }
+    });
+
+    // ============================================================
+    //  АНИМАЦИЯ ВСТРЯСКИ
+    // ============================================================
+
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            60% { transform: translateX(6px); }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // ============================================================
+    //  УБИРАЕМ ЭФФЕКТ ШЁЛКА
+    // ============================================================
+
+    setTimeout(() => {
+        document.getElementById('silk').classList.remove('active');
+    }, 3000);
+
+    // ============================================================
+    //  ПОДСВЕТКА МОРЗЯНКИ
+    // ============================================================
+
+    const hintChars = morseHint.textContent.split('');
+    morseHint.innerHTML = hintChars.map(char => {
+        if (char === '.') return `<span class="hint-dot">·</span>`;
+        if (char === '-') return `<span class="hint-dash">—</span>`;
+        return char;
+    }).join('');
+
+    setTimeout(() => {
+        morseHint.classList.add('active');
+    }, 500);
 </script>
 
 </body>
